@@ -14,7 +14,7 @@ namespace Sample
         {
             Configuration.Modules.UseAbplusRebusRabbitMqConsumer()
                 .UseLogging(c => c.NLog())
-                .ConnectTo("amqp://dev:dev@rabbitmq.local.jk724.cn/dev_host")
+                .ConnectTo("amqp://flymax:123456@localhost:5672")
                 .UseQueue(Assembly.GetExecutingAssembly().GetName().Name)
                 .RegisterHandlerInAssemblys(Assembly.GetExecutingAssembly());
         }

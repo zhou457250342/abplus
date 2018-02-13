@@ -9,6 +9,9 @@ using Rebus.Bus;
 using Rebus.CastleWindsor;
 using Rebus.Config;
 using Rebus.Handlers;
+using Rebus.Retry;
+using Abplus.MqMessages.RebusCore.MesssageRetryStrategy;
+using Rebus.Retry.Simple;
 
 namespace Abp.MqMessages.Consumers
 {
@@ -57,7 +60,22 @@ namespace Abp.MqMessages.Consumers
                 {
                     rebusConfig.Options(o => o.EnableMessageAuditing(moduleConfig.MessageAuditingQueueName));
                 }
-                
+                else
+                {
+                    rebusConfig.Options(o =>
+                    {
+                        o.Register<IErrorTracker>(op => new NoAutingLoggerTracker());
+                        o.Register<IRetryStrategy>(c =>
+                        {
+                            var retryStrategySettings = new RetryStrategySettings(c.Get<SimpleRetryStrategySettings>(), true);
+                            var errorTracker = c.Get<IErrorTracker>();
+                            var errorHandler = c.Get<IErrorHandler>();
+                            return new RetryStrategy(retryStrategySettings, errorTracker, errorHandler);
+                        });
+                    }
+                    );
+                }
+
                 var mqMessageTypes = new List<Type>();
                 //Register handlers first!
                 foreach (var assembly in moduleConfig.AssemblysIncludeRebusMqMessageHandlers)

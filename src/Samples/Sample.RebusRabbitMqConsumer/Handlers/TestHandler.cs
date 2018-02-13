@@ -17,6 +17,7 @@ namespace Sample.Handlers
 
         public async Task Handle(TestMqMessage message)
         {
+            throw new System.Exception("");
             var msg = $"{Logger.GetType()}:{message.Name},{message.Value},{message.Time}";
             Logger.Debug(msg);
             await Publisher.PublishAsync(msg);//send it again!

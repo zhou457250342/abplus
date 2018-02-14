@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Topshelf;
 
-namespace Sample.RebusRabbitMqConsumer
+namespace Sample.RebusRabbitMqConsumerExt.Host
 {
     class Program
     {
-        static int Main()
+        static int Main(string[] args)
         {
             return (int)HostFactory.Run(x =>
             {

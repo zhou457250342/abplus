@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Topshelf;
 
-namespace Sample.RebusRabbitMqConsumer
+namespace Sample.RebusRabbitMqPublisherExt.Host
 {
     class Program
     {
         static int Main()
         {
+
             return (int)HostFactory.Run(x =>
             {
                 x.UseAssemblyInfoForServiceInfo();
 
-                x.Service<SampleRebusRabbitMqConsumerBootstrap>(s =>
+                x.Service<SampleRebusRabbitMqPublisherBootstrap>(s =>
                 {
-                    s.ConstructUsing(() => new SampleRebusRabbitMqConsumerBootstrap());
+                    s.ConstructUsing(() => new SampleRebusRabbitMqPublisherBootstrap());
                     s.WhenStarted(v => v.Start());
                     s.WhenStopped(v => v.Stop());
                     s.BeforeStartingService(_ => { Console.WriteLine("Processor is starting"); });

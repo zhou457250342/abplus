@@ -1,4 +1,4 @@
-﻿#if NET46
+﻿#if NET462
 using System.Threading.Tasks;
 using Castle.Core.Logging;
 using Rebus.Handlers;
@@ -15,6 +15,7 @@ namespace Sample.Handlers
         {
             Publisher = NullMqMessagePublisher.Instance;
         }
+
 
         public async Task Handle(TestMqMessage message)
         {
